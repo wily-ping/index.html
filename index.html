@@ -1,0 +1,411 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavadero</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #101820;
+            color: white;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 25px;
+            background: #172936;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #29485c;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #35c6f4;
+            font-size: 30px;
+        }
+
+        header p {
+            color: #b7c8d3;
+        }
+
+        .panel {
+            background: #172936;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #29485c;
+        }
+
+        h2 {
+            color: #35c6f4;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            color: #dce8ee;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 7px;
+            border: 1px solid #456174;
+            background: #101820;
+            color: white;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 7px;
+            background: #18a9dc;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #087da8;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .vehiculo {
+            background: #203746;
+            border: 1px solid #36566a;
+            border-radius: 9px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .vehiculo h3 {
+            color: #35c6f4;
+            margin-top: 0;
+        }
+
+        .vehiculo p {
+            margin: 9px 0;
+            color: #e0ebf0;
+        }
+
+        .numero {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .caja p {
+            padding: 10px;
+            margin: 7px 0;
+            background: #203746;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .total {
+            color: #35c6f4;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .mensaje {
+            margin-top: 12px;
+            color: #65dda5;
+            text-align: center;
+        }
+
+        .boton-final {
+            background: #d64b4b;
+        }
+
+        .boton-final:hover {
+            background: #a83232;
+        }
+
+        @media (max-width: 650px) {
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <header>
+        <h1>LAVADERO</h1>
+        <p>Sistema de registro y control de servicios</p>
+    </header>
+
+    <section class="panel">
+        <h2>Registrar servicio</h2>
+
+        <label>Tipo de vehículo</label>
+        <select id="tipo">
+            <option value="Moto">Moto</option>
+            <option value="Carro">Carro</option>
+            <option value="Moto carro">Moto carro</option>
+        </select>
+
+        <label>Valor del servicio</label>
+        <input type="number" id="valor" placeholder="Ingrese el valor" min="1">
+
+        <label>Método de pago</label>
+        <select id="pago">
+            <option value="Efectivo">Efectivo</option>
+            <option value="Nequi">Nequi</option>
+        </select>
+
+        <button onclick="registrarServicio()">Registrar servicio</button>
+
+        <div class="mensaje" id="mensaje"></div>
+    </section>
+
+    <section class="panel">
+        <h2>Resumen general del lavadero</h2>
+
+        <div class="resumen">
+
+            <div class="vehiculo">
+                <h3>MOTOS</h3>
+                <p>Cantidad</p>
+                <div class="numero" id="motos">0</div>
+                <p>Total: <strong id="totalMotos">$0</strong></p>
+                <p>Nosotros (60%): <strong id="nosotrosMotos">$0</strong></p>
+                <p>Lavadero (40%): <strong id="lavaderoMotos">$0</strong></p>
+            </div>
+
+            <div class="vehiculo">
+                <h3>CARROS</h3>
+                <p>Cantidad</p>
+                <div class="numero" id="carros">0</div>
+                <p>Total: <strong id="totalCarros">$0</strong></p>
+                <p>Nosotros (60%): <strong id="nosotrosCarros">$0</strong></p>
+                <p>Lavadero (40%): <strong id="lavaderoCarros">$0</strong></p>
+            </div>
+
+            <div class="vehiculo">
+                <h3>MOTO CARROS</h3>
+                <p>Cantidad</p>
+                <div class="numero" id="carroMoto">0</div>
+                <p>Total: <strong id="totalCarroMoto">$0</strong></p>
+                <p>Nosotros (60%): <strong id="nosotrosCarroMoto">$0</strong></p>
+                <p>Lavadero (40%): <strong id="lavaderoCarroMoto">$0</strong></p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="panel caja">
+        <h2>Resumen de caja general</h2>
+
+        <p>
+            Total de servicios:
+            <strong id="servicios">0</strong>
+        </p>
+
+        <p>
+            Total en efectivo:
+            <strong id="efectivo">$0</strong>
+        </p>
+
+        <p>
+            Total en Nequi:
+            <strong id="nequi">$0</strong>
+        </p>
+
+        <p>
+            Total recaudado:
+            <strong id="ventas">$0</strong>
+        </p>
+
+        <p>
+            Nosotros (60%):
+            <strong id="nosotros">$0</strong>
+        </p>
+
+        <p>
+            Lavadero (40%):
+            <strong id="lavadero">$0</strong>
+        </p>
+
+        <p class="total">
+            TOTAL GENERAL:
+            <strong id="totalGeneral">$0</strong>
+        </p>
+    </section>
+
+    <button class="boton-final" onclick="finalizarJornada()">
+        Finalizar jornada
+    </button>
+
+</div>
+
+<script>
+
+    let motos = 0;
+    let carros = 0;
+    let carroMoto = 0;
+
+    let totalMotos = 0;
+    let totalCarros = 0;
+    let totalCarroMoto = 0;
+
+    let totalEfectivo = 0;
+    let totalNequi = 0;
+
+    let servicios = [];
+
+    function formato(valor) {
+        return "$" + valor.toLocaleString("es-CO", {
+            maximumFractionDigits: 0
+        });
+    }
+
+    function registrarServicio() {
+
+        let tipo = document.getElementById("tipo").value;
+        let valor = Number(document.getElementById("valor").value);
+        let pago = document.getElementById("pago").value;
+
+        if (valor <= 0 || !Number.isFinite(valor)) {
+            document.getElementById("mensaje").textContent =
+                "Ingrese un valor válido para el servicio.";
+            return;
+        }
+
+        servicios.push({
+            tipo: tipo,
+            valor: valor,
+            pago: pago
+        });
+
+        if (pago === "Efectivo") {
+            totalEfectivo += valor;
+        } else {
+            totalNequi += valor;
+        }
+
+        if (tipo === "Moto") {
+            motos++;
+            totalMotos += valor;
+        } else if (tipo === "Carro") {
+            carros++;
+            totalCarros += valor;
+        } else {
+            carroMoto++;
+            totalCarroMoto += valor;
+        }
+
+        document.getElementById("valor").value = "";
+
+        document.getElementById("mensaje").textContent =
+            "Servicio registrado correctamente.";
+
+        mostrarResumen();
+    }
+
+    function mostrarResumen() {
+
+        let totalVentas = totalMotos + totalCarros + totalCarroMoto;
+
+        let totalNosotros = totalVentas * 0.60;
+        let totalLavadero = totalVentas * 0.40;
+
+        document.getElementById("motos").textContent = motos;
+        document.getElementById("carros").textContent = carros;
+        document.getElementById("carroMoto").textContent = carroMoto;
+
+        document.getElementById("totalMotos").textContent = formato(totalMotos);
+        document.getElementById("totalCarros").textContent = formato(totalCarros);
+        document.getElementById("totalCarroMoto").textContent = formato(totalCarroMoto);
+
+        document.getElementById("nosotrosMotos").textContent =
+            formato(totalMotos * 0.60);
+
+        document.getElementById("nosotrosCarros").textContent =
+            formato(totalCarros * 0.60);
+
+        document.getElementById("nosotrosCarroMoto").textContent =
+            formato(totalCarroMoto * 0.60);
+
+        document.getElementById("lavaderoMotos").textContent =
+            formato(totalMotos * 0.40);
+
+        document.getElementById("lavaderoCarros").textContent =
+            formato(totalCarros * 0.40);
+
+        document.getElementById("lavaderoCarroMoto").textContent =
+            formato(totalCarroMoto * 0.40);
+
+        document.getElementById("servicios").textContent = servicios.length;
+
+        document.getElementById("efectivo").textContent =
+            formato(totalEfectivo);
+
+        document.getElementById("nequi").textContent =
+            formato(totalNequi);
+
+        document.getElementById("ventas").textContent =
+            formato(totalVentas);
+
+        document.getElementById("nosotros").textContent =
+            formato(totalNosotros);
+
+        document.getElementById("lavadero").textContent =
+            formato(totalLavadero);
+
+        document.getElementById("totalGeneral").textContent =
+            formato(totalVentas);
+    }
+
+    function finalizarJornada() {
+
+        mostrarResumen();
+
+        alert(
+            "JORNADA FINALIZADA\n\n" +
+            "Total de servicios: " + servicios.length + "\n" +
+            "Total recaudado: " + formato(totalMotos + totalCarros + totalCarroMoto) +
+            "\nNosotros (60%): " + formato((totalMotos + totalCarros + totalCarroMoto) * 0.60) +
+            "\nLavadero (40%): " + formato((totalMotos + totalCarros + totalCarroMoto) * 0.40)
+        );
+    }
+
+</script>
+
+</body>
+</html>
